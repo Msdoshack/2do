@@ -1,0 +1,12 @@
+{
+  "name": "todo-app-typescript",
+  "version": "1.0.0",
+  "description": "Advance todo app",
+  "license": "ISC",
+  "scripts": {
+    "install": "npm install --prefix server && npm install --prefix client",
+    "build": "npm run build --prefix server && npm run build --prefix client",
+    "start": "npm start --prefix server",
+    "dev": "concurrently \"npm run client:dev\"\"npm run server:dev\""
+  }
+}

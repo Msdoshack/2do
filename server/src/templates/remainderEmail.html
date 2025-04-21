@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Reminder</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+    "
+  >
+    <table
+      role="presentation"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="100%"
+      height="100%"
+      style="padding: 20px"
+    >
+      <tr>
+        <td align="center" valign="middle">
+          <table
+            role="presentation"
+            border="1"
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              max-width: 600px;
+              width: 100%;
+              background-color: #ffffff;
+              border-radius: 8px;
+              overflow: hidden;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            "
+          >
+            <!-- Header -->
+            <tr>
+              <td align="start" style="background-color: #000; padding: 10px">
+                <h1 style="color: white; margin: 0; font-size: 20px">⏰2DO</h1>
+              </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+              <td style="padding: 30px; text-align: center">
+                <h2 style="margin-top: 0; color: #28a745">Task Reminder</h2>
+
+                <p
+                  style="
+                    font-size: 18px;
+                    color: #333;
+                    text-transform: capitalize;
+                  "
+                >
+                  Hello <strong>{{username}}</strong>,
+                </p>
+
+                <p style="font-size: 16px; color: #333">
+                  This is a reminder for your task:
+                </p>
+
+                <p style="font-size: 16px; font-weight: bold; color: orange">
+                  {{taskTitle}}
+                </p>
+
+                <a
+                  href="{{taskLink}}"
+                  style="
+                    display: inline-block;
+                    margin-top: 20px;
+                    background-color: #000;
+                    color: white;
+                    text-decoration: none;
+                    padding: 12px 18px;
+                    border-radius: 12px;
+                    font-weight: bold;
+                  "
+                  >View Task</a
+                >
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
