@@ -29,31 +29,51 @@ export const useUpdateTodo = () => {
 };
 
 export const useDeleteTodo = () => {
-  return useMutation<NoDataPayloadType, CustomErrType, string>({
-    mutationFn: (todoId) => deleteTodo(todoId),
+  return useMutation<
+    NoDataPayloadType,
+    CustomErrType,
+    { todoId: string; token: string }
+  >({
+    mutationFn: ({ todoId, token }) => deleteTodo({ todoId, token }),
   });
 };
 
 export const useTrashTodo = () => {
-  return useMutation<NoDataPayloadType, CustomErrType, string>({
-    mutationFn: (todoId) => trashTodo(todoId),
+  return useMutation<
+    NoDataPayloadType,
+    CustomErrType,
+    { todoId: string; token: string }
+  >({
+    mutationFn: ({ todoId, token }) => trashTodo({ todoId, token }),
   });
 };
 
 export const useMarkTodoAsDone = () => {
-  return useMutation<NoDataPayloadType, CustomErrType, string>({
-    mutationFn: (todoId) => markTodoAsDone(todoId),
+  return useMutation<
+    NoDataPayloadType,
+    CustomErrType,
+    { todoId: string; token: string }
+  >({
+    mutationFn: ({ todoId, token }) => markTodoAsDone({ todoId, token }),
   });
 };
 
 export const useToggleReminder = () => {
-  return useMutation<NoDataPayloadType, CustomErrType, string>({
-    mutationFn: (todoId) => toggleReminder(todoId),
+  return useMutation<
+    NoDataPayloadType,
+    CustomErrType,
+    { todoId: string; token: string }
+  >({
+    mutationFn: ({ todoId, token }) => toggleReminder({ todoId, token }),
   });
 };
 
 export const useRestoreTodo = () => {
-  return useMutation<NoDataPayloadType, CustomErrType, string>({
-    mutationFn: (todoId) => restoreTodo(todoId),
+  return useMutation<
+    NoDataPayloadType,
+    CustomErrType,
+    { todoId: string; token: string }
+  >({
+    mutationFn: ({ todoId, token }) => restoreTodo({ todoId, token }),
   });
 };

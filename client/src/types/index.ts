@@ -25,17 +25,18 @@ export type SigninType = {
 };
 
 export type ChangePasswordType = {
-  password: string;
-  newPassword: string;
+  data: { password: string; newPassword: string };
+  token: string;
 };
 
 export type UpdateEmailType = {
-  code: string;
+  data: { code: string };
+  token: string;
 };
 
 export type VerifyEmailType = {
-  email: string;
-  password: string;
+  data: { email: string; password: string };
+  token: string;
 };
 
 export type TodoType = {
@@ -72,6 +73,7 @@ export type AddTodoType = {
   description: string;
   reminderInterval: string;
   deadline?: Date | undefined;
+  token: string;
 };
 
 export type AddTodoPayloadType = {
@@ -82,6 +84,7 @@ export type AddTodoPayloadType = {
 
 export type UpdateTodoType = {
   todoId: string;
+  token: string;
   data: {
     title: string;
     description: string;
@@ -93,6 +96,8 @@ export type UpdateTodoType = {
 
 export type UpdateTodoStatusType = {
   status: string;
+  todoId: string;
+  token: string;
 };
 
 export type DeleteTodoPayloadType = {

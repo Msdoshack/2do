@@ -43,8 +43,6 @@ const scheduleReminders = () => {
     cron.schedule(cronPattern, async () => {
       console.log(`⏳ Checking for ${interval} reminders...`);
 
-      // const now = new Date();
-
       try {
         const todos = await Todo.find({
           reminder: true,
@@ -62,11 +60,9 @@ const scheduleReminders = () => {
             {
               username: todo.user.username,
               taskTitle: todo.title,
-              taskLink: `https://example.com/todos/${todo._id}`,
+              taskLink: `https://twodo-r0as.onrender.com/dashboard?page=single-todo&todoId=${todo._id}`,
             }
           );
-          // Delay 1 minute between each email
-          // await sleep(60000);
         }
       } catch (error) {
         console.error(`❌ Error processing ${interval} reminders:`, error);
@@ -76,32 +72,3 @@ const scheduleReminders = () => {
 };
 
 export default scheduleReminders;
-
-// Update next reminder time
-// switch (interval) {
-//   case "min":
-//     todo.nextReminderAt = new Date(now.getTime() + 60 * 1000);
-//     break;
-//   case "hourly":
-//     todo.nextReminderAt = new Date(now.getTime() + 60 * 60 * 1000);
-//     break;
-//   case "daily":
-//     todo.nextReminderAt = new Date(
-//       now.getTime() + 24 * 60 * 60 * 1000
-//     );
-//     break;
-//   case "weekly":
-//     todo.nextReminderAt = new Date(
-//       now.getTime() + 7 * 24 * 60 * 60 * 1000
-//     );
-//     break;
-//   case "monthly":
-//     todo.nextReminderAt = new Date(now.setMonth(now.getMonth() + 1));
-//     break;
-//   case "yearly":
-//     todo.nextReminderAt = new Date(
-//       now.setFullYear(now.getFullYear() + 1)
-//     );
-//     break;
-// }
-// await todo.save();

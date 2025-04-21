@@ -16,6 +16,8 @@ import toast from "react-hot-toast";
 import Spinner from "../Spinner";
 import UpdateEmailModal from "./UpdateEmailModal";
 import { useVerifyEmailMutation } from "../../tanstack/mutation/user/mutation";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/userSlice";
 
 const formSchema = z.object({
   password: z.string().min(1, "please type in your new password"),
@@ -24,6 +26,7 @@ const formSchema = z.object({
 });
 
 const VerifyEmailModal = ({ onClose }: { onClose: () => void }) => {
+  const { user } = useSelector(selectUser);
   const { mutate, data, error, isPending, isError, isSuccess } =
     useVerifyEmailMutation();
 
@@ -43,7 +46,7 @@ const VerifyEmailModal = ({ onClose }: { onClose: () => void }) => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate(values);
+    mutate({ data: values, token: user.token });
   };
 
   useEffect(() => {

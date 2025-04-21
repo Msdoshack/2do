@@ -16,35 +16,35 @@ const API_URL = {
   changePassword: "/api/v1/users/change-password",
 };
 
-const user = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user")!)
-  : null;
+// const user = localStorage.getItem("user")
+//   ? JSON.parse(localStorage.getItem("user")!)
+//   : null;
 
 export const getAllUser = async () => {
   return (await axios.get<UserType>(`${API_URL.getAllUsers}`)).data;
 };
 
-export const getSingleUser = async () => {
+export const getSingleUser = async (token: string) => {
   return (
     await axios.get<UserPayloadType>(`${API_URL.getSingleUser}/`, {
-      headers: { Authorization: `Bearer ${user.token}` },
+      headers: { Authorization: `Bearer ${token}` },
     })
   ).data;
 };
 
 export const verifyEmail = async (data: VerifyEmailType) => {
   return (
-    await axios.post(API_URL.verifyEmail, data, {
-      headers: { Authorization: `Bearer ${user.token}` },
+    await axios.post(API_URL.verifyEmail, data.data, {
+      headers: { Authorization: `Bearer ${data.token}` },
     })
   ).data;
 };
 
 export const updateUserEmail = async (data: UpdateEmailType) => {
   return (
-    await axios.patch(`${API_URL.updateUserEmail}`, data, {
+    await axios.patch(`${API_URL.updateUserEmail}`, data.data, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${data.token}`,
       },
     })
   ).data;
@@ -52,9 +52,9 @@ export const updateUserEmail = async (data: UpdateEmailType) => {
 
 export const changePassword = async (data: ChangePasswordType) => {
   return (
-    await axios.patch(`${API_URL.changePassword}`, data, {
+    await axios.patch(`${API_URL.changePassword}`, data.data, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${data.token}`,
       },
     })
   ).data;

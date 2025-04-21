@@ -7,12 +7,15 @@ import { useQueryClient } from "@tanstack/react-query";
 import DeleteTodoModal from "../modals/DeleteTodoModal";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Spinner from "../Spinner";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/userSlice";
 
 type PropsType = {
   todoId: string;
 };
 
 const TrashTodo = ({ todoId }: PropsType) => {
+  const { user } = useSelector(selectUser);
   const [showModal, setShowModal] = useState(false);
   const { mutate, data, isSuccess, isError, error, isPending } = useTrashTodo();
 
@@ -32,7 +35,7 @@ const TrashTodo = ({ todoId }: PropsType) => {
     setShowModal(false);
   };
   const trashFn = () => {
-    mutate(todoId);
+    mutate({ todoId, token: user.token });
     setShowModal(false);
   };
 

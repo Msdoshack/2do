@@ -13,13 +13,16 @@ import MarkDone from "./mutation-buttons/MMarkDoneButton";
 import Loading from "../components/Loading";
 import ToggleReminder from "./mutation-buttons/MToggleReminderButton";
 import TrashTodo from "./mutation-buttons/MTrashTodoButton";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/user/userSlice";
 
 const SingleTodoComponent = () => {
+  const { user } = useSelector(selectUser);
   const [searchParams] = useSearchParams();
   const queryObject = Object.fromEntries(searchParams.entries());
   const { todoId } = queryObject;
   const [isUpdate, setIsUpdate] = useState(false);
-  const { data, isLoading } = useGetSingleTodo(todoId!);
+  const { data, isLoading } = useGetSingleTodo({ todoId, token: user.token });
 
   const onCloseUpdate = () => {
     setIsUpdate(false);

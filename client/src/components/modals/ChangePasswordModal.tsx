@@ -15,6 +15,8 @@ import { useChangePasswordMutation } from "../../tanstack/mutation/user/mutation
 import { useEffect } from "react";
 import Spinner from "../Spinner";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/userSlice";
 
 const formSchema = z
   .object({
@@ -28,6 +30,7 @@ const formSchema = z
   });
 
 const ChangePasswordModal = ({ onClose }: { onClose: () => void }) => {
+  const { user } = useSelector(selectUser);
   const { mutate, data, error, isPending, isError, isSuccess } =
     useChangePasswordMutation();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,7 +45,7 @@ const ChangePasswordModal = ({ onClose }: { onClose: () => void }) => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const { reTypePassword, ...data } = values;
-    mutate(data);
+    mutate({ data, token: user.token });
   };
 
   useEffect(() => {
@@ -131,7 +134,7 @@ const ChangePasswordModal = ({ onClose }: { onClose: () => void }) => {
                     <Input
                       placeholder="re-type new password"
                       {...field}
-                      type="newPassword"
+                      type="password"
                       className="py-5"
                     />
                   </FormControl>

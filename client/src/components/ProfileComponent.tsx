@@ -22,9 +22,10 @@ const UserDetails = ({ title, value }: { title: string; value: string }) => {
 const ProfileComponent = () => {
   const { user } = useSelector(selectUser);
 
-  const { data, isLoading, isError, error, isPending } = useGetUserQuery(
-    user.user._id
-  );
+  const { data, isLoading, isError, error, isPending } = useGetUserQuery({
+    userId: user.user._id,
+    token: user.token,
+  });
   const dispatch = useDispatch();
 
   const [showUpdateEmailModal, setShowUpdateEmailModal] = useState(false);

@@ -28,6 +28,8 @@ import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/user/userSlice";
 
 const formSchema = z.object({
   title: z.string().min(1, "please provide a title"),
@@ -48,6 +50,7 @@ const formSchema = z.object({
 });
 
 const AddTodoComponent = () => {
+  const { user } = useSelector(selectUser);
   const { mutate, data, isError, isSuccess, error } = useAddTodo();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,7 +67,7 @@ const AddTodoComponent = () => {
   const queryClient = useQueryClient();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate(values);
+    mutate({ ...values, token: user.token });
   };
 
   useEffect(() => {

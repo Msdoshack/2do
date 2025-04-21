@@ -15,10 +15,16 @@ import {
   VerifyEmailType,
 } from "../../../types";
 
-export const useGetUserQuery = (userId: string) => {
+export const useGetUserQuery = ({
+  userId,
+  token,
+}: {
+  userId: string;
+  token: string;
+}) => {
   return useQuery<UserPayloadType, CustomErrType>({
     queryKey: ["user", { userId }],
-    queryFn: () => getSingleUser(),
+    queryFn: () => getSingleUser(token),
   });
 };
 

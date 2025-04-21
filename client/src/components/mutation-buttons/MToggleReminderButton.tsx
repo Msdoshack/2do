@@ -4,6 +4,8 @@ import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import Spinner from "../Spinner";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/userSlice";
 
 type PropsType = {
   todoId: string;
@@ -11,13 +13,14 @@ type PropsType = {
 };
 
 const MToggleReminderButton = ({ todoId, reminder }: PropsType) => {
+  const { user } = useSelector(selectUser);
   const { mutate, data, error, isPending, isError, isSuccess } =
     useToggleReminder();
 
   const queryClient = useQueryClient();
 
   const handleToggle = () => {
-    mutate(todoId);
+    mutate({ todoId, token: user.token });
   };
 
   useEffect(() => {

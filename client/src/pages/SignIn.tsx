@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
 import ShowPassword from "../components/ShowPassword";
+import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   email: z
@@ -50,6 +51,7 @@ const SignIn = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const from = location.state?.from?.pathname || "/dashboard";
 
@@ -61,6 +63,7 @@ const SignIn = () => {
     if (data && isSuccess) {
       dispatch(setUser(data.data));
       toast.success("Login successful");
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
       navigate(from, { replace: true });
       return;
     }

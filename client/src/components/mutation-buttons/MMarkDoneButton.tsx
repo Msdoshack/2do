@@ -5,6 +5,8 @@ import { useMarkTodoAsDone } from "../../tanstack/mutation/todo/mutation";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Spinner from "../Spinner";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/userSlice";
 
 type PropsType = {
   isDone: boolean;
@@ -12,11 +14,12 @@ type PropsType = {
 };
 
 const MMarkDoneButton = ({ isDone, todoId }: PropsType) => {
+  const { user } = useSelector(selectUser);
   const { mutate, data, error, isPending, isError, isSuccess } =
     useMarkTodoAsDone();
 
   const handleMarkAsDone = () => {
-    mutate(todoId);
+    mutate({ todoId, token: user.token });
   };
 
   const queryClient = useQueryClient();

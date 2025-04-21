@@ -13,11 +13,11 @@ import {
 import { Input } from "./ui/input";
 import ReactQuill from "react-quill-new";
 
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+// import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
-import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
-import { Calendar } from "./ui/calendar";
+// import { CalendarIcon } from "lucide-react";
+// import { format } from "date-fns";
+// import { Calendar } from "./ui/calendar";
 import {
   Select,
   SelectContent,
@@ -25,13 +25,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { cn } from "../lib/utils";
+// import { cn } from "../lib/utils";
 import { TodoType } from "../types";
 import { useUpdateTodo } from "../tanstack/mutation/todo/mutation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import Spinner from "./Spinner";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/user/userSlice";
 
 const formSchema = z.object({
   title: z.string().min(1, "please provide a title"),
@@ -41,14 +43,14 @@ const formSchema = z.object({
     .string()
     .min(1, "please provider preferred reaminder interval"),
 
-  deadline: z
-    .union([z.string(), z.date()])
+  // deadline: z
+  //   .union([z.string(), z.date()])
 
-    .refine((val) => !isNaN(new Date(val).getTime()), {
-      message: "Invalid date format",
-    })
-    .transform((val) => new Date(val))
-    .optional(),
+  //   .refine((val) => !isNaN(new Date(val).getTime()), {
+  //     message: "Invalid date format",
+  //   })
+  //   .transform((val) => new Date(val))
+  //   .optional(),
   isDone: z.coerce.boolean(),
 });
 
@@ -58,6 +60,7 @@ type PropsType = {
 };
 
 const UpdateTodoComponent = ({ data, onClose }: PropsType) => {
+  const { user } = useSelector(selectUser);
   const {
     mutate,
     data: updateTodoData,
@@ -72,14 +75,14 @@ const UpdateTodoComponent = ({ data, onClose }: PropsType) => {
       title: data.title,
       description: data.description,
       reminderInterval: data.reminderInterval,
-      deadline: data.deadline,
+      // deadline: data.deadline,
       isDone: data.isDone,
     },
   });
   const queryClient = useQueryClient();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate({ data: values, todoId: data._id });
+    mutate({ data: values, todoId: data._id, token: user.token });
   };
 
   useEffect(() => {
@@ -143,7 +146,7 @@ const UpdateTodoComponent = ({ data, onClose }: PropsType) => {
           )}
         />
 
-        <FormField
+        {/* <FormField
           name="deadline"
           control={form.control}
           render={({ field }) => (
@@ -180,13 +183,13 @@ const UpdateTodoComponent = ({ data, onClose }: PropsType) => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           name="reminderInterval"
           control={form.control}
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="mt-10">
               <FormLabel>Set a reminder</FormLabel>
               <FormControl>
                 <Select
@@ -217,7 +220,7 @@ const UpdateTodoComponent = ({ data, onClose }: PropsType) => {
               <FormLabel>Status</FormLabel>
               <FormControl>
                 <Select
-                  defaultValue={String(field.value)}
+                  defaultValue={String(data.isDone)}
                   onValueChange={(val) => field.onChange(val === "true")}
                 >
                   <SelectTrigger className="w-[180px]">

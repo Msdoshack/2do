@@ -3,25 +3,25 @@ import { useGetUserTodos } from "../tanstack/queries/todo/query";
 import Loading from "./Loading";
 import TodoHeader from "./TodoHeader";
 import TodoTableComponent from "./TodoTableComponent";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser, selectUser } from "../redux/user/userSlice";
 import Pagination from "./Pagination";
 
 const AllTodosComponent = () => {
   const [offset, setOffset] = useState(0);
+  const { user } = useSelector(selectUser);
 
-  const { data, error, isError, isLoading, isFetching } = useGetUserTodos(
-    `isDeleted=false&offset=${offset}`,
-    offset
-  );
+  const { data, error, isError, isLoading, isFetching } = useGetUserTodos({
+    query: `isDeleted=false&offset=${offset}`,
+    offset,
+    token: user.token,
+  });
 
   const dispatch = useDispatch();
 
   const notNext = !data || !data.data || data?.data.length < 10;
 
   const notPrev = offset === 0;
-
-  console.log(data);
 
   useEffect(() => {
     if (isError) {

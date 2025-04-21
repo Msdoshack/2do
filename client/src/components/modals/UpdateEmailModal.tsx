@@ -16,6 +16,8 @@ import Spinner from "../Spinner";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { selectUser } from "../../redux/user/userSlice";
+import { useSelector } from "react-redux";
 
 type PropsType = {
   email: string;
@@ -27,6 +29,7 @@ const formSchema = z.object({
 });
 
 const UpdateEmailModal = ({ onClose, email }: PropsType) => {
+  const { user } = useSelector(selectUser);
   const { mutate, data, error, isError, isSuccess, isPending } =
     useUpdateEmailMutation();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,7 +43,7 @@ const UpdateEmailModal = ({ onClose, email }: PropsType) => {
   const navigate = useNavigate();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate(values);
+    mutate({ data: values, token: user.token });
   };
 
   useEffect(() => {

@@ -4,13 +4,18 @@ import Loading from "./Loading";
 import TodoHeader from "./TodoHeader";
 import TodoTableComponent from "./TodoTableComponent";
 import Pagination from "./Pagination";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/user/userSlice";
 
 const DeleteTodoComponent = () => {
+  const { user } = useSelector(selectUser);
   const [offset, setOffset] = useState(0);
-  const { data, isLoading, isFetching, error } = useGetUserTodos(
-    `isDeleted=true&offset=${offset}`,
-    offset
-  );
+
+  const { data, isLoading, isFetching } = useGetUserTodos({
+    query: `isDeleted=true&offset=${offset}`,
+    offset,
+    token: user.token,
+  });
 
   const notNext = !data || !data.data || data?.data.length < 10;
 
@@ -22,7 +27,7 @@ const DeleteTodoComponent = () => {
     <div className="mx-auto py-10 px-4 md:px-16  flex flex-col w-full items-center">
       <TodoHeader title="Deleted Tasks" isAddTask />
 
-      {data?.data.length || !error ? (
+      {data?.data.length ? (
         <>
           <TodoTableComponent caption="deleted" data={data?.data!} />
           <Pagination
@@ -34,7 +39,7 @@ const DeleteTodoComponent = () => {
         </>
       ) : (
         <div className="h-[70vh] flex items-center justify-center text-center text-lg font-medium">
-          No task yet
+          No deleted task
         </div>
       )}
     </div>
