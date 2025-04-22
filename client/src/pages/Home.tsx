@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import GridWrapper from "../components/GridWrapper";
-import { useEffect, useRef, useState } from "react";
-import Spinner from "../components/Spinner";
+import { useEffect, useRef } from "react";
 
 const images = ["/add_task.jpg", "/task.jpg", "/mail_2.jpg", "/mail.jpg"];
 
 const Home = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -60,7 +58,6 @@ const Home = () => {
                     src={url}
                     alt={`Slide ${index + 1}`}
                     className="w-full h-full object-cover rounded-2xl"
-                    onLoad={() => setIsLoading(false)}
                   />
                 </div>
               ))}
