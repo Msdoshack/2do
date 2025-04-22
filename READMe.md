@@ -8,6 +8,7 @@ An advanced, production-grade To-Do application designed to help users beat proc
 ---
 
 ![task](client/public/mail_2.jpg)
+
 ![task](client/public/mail.jpg)
 
 ## 🚀 Features
@@ -15,9 +16,11 @@ An advanced, production-grade To-Do application designed to help users beat proc
 ### ✅ Task Management
 
 - Create, update, and delete tasks effortlessly.
+
   ![Add task](client/public/add_task.jpg)
 
 - Mark tasks as complete or pending.
+
   ![task](client/public/task.jpg)
 
 - Organize tasks by priority, deadline, or category.
