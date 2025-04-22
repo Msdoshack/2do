@@ -32,7 +32,6 @@ const Home = () => {
   }, []);
   return (
     <GridWrapper>
-      {/* px-8 sm:px-16 md:px-30 */}
       <div className="container mx-auto pt-16 relative">
         <div className="z-10 flex flex-col items-center">
           <div className="text-center">
