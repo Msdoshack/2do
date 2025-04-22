@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import GridWrapper from "../components/GridWrapper";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Spinner from "../components/Spinner";
 
 const images = ["/add_task.jpg", "/task.jpg", "/mail_2.jpg", "/mail.jpg"];
 
 const Home = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -36,7 +38,7 @@ const Home = () => {
       <div className="container mx-auto pt-16 relative">
         <div className="z-10 flex flex-col items-center">
           <div className="text-center">
-            <h1 className="text-3xl sm:text-5xl  lilita-one-regular text-orange-400 mb-4 uppercase font-extrabold max-w-sm sm:max-w-2xl">
+            <h1 className="text-2xl sm:text-3xl  md:5xl lilita-one-regular text-orange-400 mb-4 uppercase font-extrabold max-w-sm sm:max-w-xl">
               "Do it now. Sometimes 'later' becomes 'never'."
             </h1>
             <p className="text-center font-medium animate-pulse">
@@ -58,20 +60,14 @@ const Home = () => {
                     src={url}
                     alt={`Slide ${index + 1}`}
                     className="w-full h-full object-cover rounded-2xl"
+                    onLoad={() => setIsLoading(false)}
                   />
                 </div>
               ))}
+              {/* {isLoading && <Spinner />} */}
             </div>
-            <div className="flex items-center justify-center gap-8 ">
-              {/* <div className="text-center text-orange-500">
-                <div>
-                  <p className="mb-2">Already have an account?</p>
-                  <Link to={"/sign-in"}>
-                    <Button>Continue</Button>
-                  </Link>
-                </div>
-              </div> */}
 
+            <div className="flex items-center justify-center gap-8 ">
               <div className="pb-10">
                 <Link to={"/sign-up"}>
                   <Button>Get Started</Button>

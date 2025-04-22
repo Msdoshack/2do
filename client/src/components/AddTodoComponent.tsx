@@ -30,6 +30,7 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { selectUser } from "../redux/user/userSlice";
+import Spinner from "./Spinner";
 
 const formSchema = z.object({
   title: z.string().min(1, "please provide a title"),
@@ -51,7 +52,7 @@ const formSchema = z.object({
 
 const AddTodoComponent = () => {
   const { user } = useSelector(selectUser);
-  const { mutate, data, isError, isSuccess, error } = useAddTodo();
+  const { mutate, data, isError, isSuccess, error, isPending } = useAddTodo();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -205,7 +206,9 @@ const AddTodoComponent = () => {
             )}
           />
 
-          <Button type="submit">Add Todo</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? <Spinner /> : "Add Todo"}
+          </Button>
         </form>
       </Form>
     </div>
